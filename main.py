@@ -1,5 +1,7 @@
-from browser_history import get_history
+import socket
 from urllib.parse import urlparse
+
+from browser_history import get_history
 
 
 def url_from_history():
@@ -49,3 +51,28 @@ def get_netloc(urls: list) -> list:
         except Exception as e:
             print(e)
     return netlocs
+
+
+def get_hostname(netlocs: list) -> list:
+    """get_hostname _summary_
+
+    Get the hostname from a list of netlocs
+
+    Args:
+        netlocs (list): A list of netlocs
+
+    Returns:
+        list: A list of hostnames
+
+    Examples:
+        >>> get_hostname(['google.com', 'yahoo.com'])
+        ['google.com', 'yahoo.com']
+    """
+    hostnames = set()
+    for netloc in netlocs:
+        try:
+            hostname = socket.gethostbyaddr(netloc)[0]
+            hostnames.add(hostname)
+        except Exception as e:
+            print(e)
+    return hostnames
