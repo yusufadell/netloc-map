@@ -71,8 +71,10 @@ def get_hostname(netlocs: list) -> list:
     hostnames = set()
     for netloc in netlocs:
         try:
-            hostname = socket.gethostbyaddr(netloc)[0]
+            hostname = socket.gethostbyname(netloc) # https://stackoverflow.com/a/166520
             hostnames.add(hostname)
         except Exception as e:
             print(e)
     return hostnames
+
+# TODO:  IP address to location
