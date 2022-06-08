@@ -4,7 +4,13 @@ from urllib.parse import urlparse
 
 import ipinfo  # https://github.com/ipinfo/python
 import matplotlib.pyplot as plt
+import mpl_toolkits
 from browser_history import get_history
+
+
+# Matplotlib Basemap toolkit
+mpl_toolkits.__path__.append('./env/lib/python3.7/site-packages/mpl_toolkits')
+from mpl_toolkits.basemap import Basemap
 
 
 def url_from_history():
@@ -101,3 +107,39 @@ async def do_req():
 loop = asyncio.get_event_loop()
 loop.run_until_complete(do_req())
 
+# TODO: Visualize the data 
+
+lat = []
+lon = []
+
+for loc in complete_details:
+    lat.append(float(loc.result()['latitude']))
+    lon.append(float(loc.result()['longitude']))
+
+# Basic map plot
+fig, ax = plt.subplots(figsize=(40, 20))
+map = Basemap()
+
+# dark grey land, black lakes
+map.fillcontinents(color='#2d2d2d', lake_color='#000000')
+
+# black background
+map.drawmapboundary(fill_color='#000000')
+
+# thin white line for country borders
+map.drawcountries(linewidth=0.15, color="w")
+
+map.drawstates(linewidth=0.1, color="w")
+
+map.plot(lon, lat, linestyle='none', marker="o",
+         markersize=25, alpha=0.4, c="white", markeredgecolor="silver",
+         markeredgewidth=1)
+
+plt.text( -170, -72,'Server locations of top 500 websites '
+'(by traffic)\nPlot realized with Python and the Basemap library'
+'\n\n~Yusuf Adel\n yusufadell.dev@gmail.com', ha='left', va='bottom',
+size=28, color='silver')
+
+# TODO: Add animate function to plot the map as the user moves
+def animate(i):
+    pass
