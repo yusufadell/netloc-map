@@ -1,6 +1,9 @@
+import asyncio
 import socket
 from urllib.parse import urlparse
 
+import ipinfo  # https://github.com/ipinfo/python
+import matplotlib.pyplot as plt
 from browser_history import get_history
 
 
@@ -79,4 +82,22 @@ def get_ip(netlocs: list) -> list:
     return ip_set
 
 
-# TODO:  IP address to location
+# TODO: (Refactor this)
+# get IP address to location with ipinfo.io
+# get all their including location (lat, lon)
+access_token = 'b7aa9c76341303'
+handler = ipinfo.AsyncHandler(access_token, cache_options={
+                              'ttl': 30, 'maxsize': 128})
+ip_address = '156.217.144.225'
+details = handler.getDetails(ip_address)
+
+complete_details = []
+
+
+async def do_req():
+    details = await handler.getDetails(ip_address)
+    complete_details.append(details.all)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(do_req())
+
