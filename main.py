@@ -53,7 +53,7 @@ def get_netloc(urls: list) -> list:
     return netlocs
 
 
-def get_hostname(netlocs: list) -> list:
+def get_ip(netlocs: list) -> list:
     """get_hostname _summary_
 
     Get the hostname from a list of netlocs
@@ -66,15 +66,17 @@ def get_hostname(netlocs: list) -> list:
 
     Examples:
         >>> get_hostname(['google.com', 'yahoo.com'])
-        ['google.com', 'yahoo.com']
+        ['216.58.198.78', '98.137.11.163']
     """
-    hostnames = set()
+    ip_set = set()
     for netloc in netlocs:
         try:
-            hostname = socket.gethostbyname(netloc) # https://stackoverflow.com/a/166520
-            hostnames.add(hostname)
+            # https://stackoverflow.com/a/166520
+            hostname = socket.gethostbyname(netloc)
+            ip_set.add(hostname)
         except Exception as e:
             print(e)
-    return hostnames
+    return ip_set
+
 
 # TODO:  IP address to location
