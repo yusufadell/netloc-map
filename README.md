@@ -30,7 +30,26 @@ It's not fun to use any **random set of IP** addresses. Everyone enjoys **person
 To install the package, run:
 
 ```shell
-pip install netloc-map
+pip install -r requirements.txt
+```
+
+## download and compile basemap from matplotlib
+<!-- 
+import mpl_toolkits
+
+mpl_toolkits.__path__.append('./env/lib/python3.7/site-packages/'
+'basemap-1.2.0-py3.7-macosx-10.14-x86_64.egg/mpl_toolkits/') 
+from mpl_toolkits.basemap import Basemap
+-->
+```shell
+git clone https://github.com/matplotlib/basemap.git
+cd basemap
+cd geos-3.3.3
+./configure
+make
+make install
+cd ../
+python setup.py install
 ```
 
 ## Quick Start
