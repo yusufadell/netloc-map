@@ -67,6 +67,10 @@ To use the package, run:
 from netloc_map import NetlocMap
 ```
 
+## Demo
+
+![location basemap demo](images/location-basemap.jpeg)
+
 ## License
 
 This project is licensed under the MIT license.
