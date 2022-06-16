@@ -1,3 +1,4 @@
+from mpl_toolkits.basemap import Basemap
 import asyncio
 import socket
 from urllib.parse import urlparse
@@ -8,10 +9,10 @@ from browser_history import get_history
 from .const import *
 
 import matplotlib.pyplot as plt
-from matplotlib import animation  
+from matplotlib import animation
 import mpl_toolkits
 mpl_toolkits.__path__.append(MPL_PATH)
-from mpl_toolkits.basemap import Basemap
+
 
 def url_from_history():
     """url_from_history _summary_
@@ -130,6 +131,7 @@ map.drawstates(linewidth=0.1, color="w")
 map.plot(lon, lat, linestyle='none', marker="o",
          markersize=25, alpha=0.4, c="white", markeredgecolor="silver",
          markeredgewidth=1)
+
 
 def update_plot(frame_number):
     # update the map
