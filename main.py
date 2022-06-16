@@ -26,7 +26,8 @@ def url_from_history():
         >>> url_from_history()
         ['https://www.google.com/search?channel=fs&client=ubuntu&q=github', 'http://yahoo.com']
     """
-    outputs = get_history()  # https://github.com/browser-history/browser-history
+    outputs = get_history(
+    )  # https://github.com/browser-history/browser-history
 
     # this is a list of (datetime.datetime, url) tuples
     his = outputs.histories
@@ -90,9 +91,11 @@ def get_ip(netlocs: list) -> list:
 
 
 async def do_req():
-    handler = ipinfo.AsyncHandler(
-        ACCESS_TOKEN, cache_options={"ttl": 30, "maxsize": 128}
-    )
+    handler = ipinfo.AsyncHandler(ACCESS_TOKEN,
+                                  cache_options={
+                                      "ttl": 30,
+                                      "maxsize": 128
+                                  })
     details = handler.getDetails(IP_ADDRESS)
     cd = list()
 
@@ -113,7 +116,6 @@ lon = []
 for loc in complete_details:
     lat.append(float(loc.result()["latitude"]))
     lon.append(float(loc.result()["longitude"]))
-
 
 # Basic map plot
 fig, ax = plt.subplots(figsize=(40, 20))
@@ -172,8 +174,11 @@ def init():
     )
 
 
-ani = animation.FuncAnimation(fig, update_plot, interval=1, frames=490, init_func=init)
-
+ani = animation.FuncAnimation(fig,
+                              update_plot,
+                              interval=1,
+                              frames=490,
+                              init_func=init)
 
 writer = animation.writers["ffmpeg"]
 writer = writer(fps=20, metadata=dict(artist="Yusufadel"), bitrate=1800)
