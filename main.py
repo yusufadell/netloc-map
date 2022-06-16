@@ -3,15 +3,15 @@ import socket
 from urllib.parse import urlparse
 
 import ipinfo  # https://github.com/ipinfo/python
-import matplotlib.pyplot as plt
-import mpl_toolkits
 from browser_history import get_history
 
+from .const import *
 
-# Matplotlib Basemap toolkit
-mpl_toolkits.__path__.append('./env/lib/python3.7/site-packages/mpl_toolkits')
+import matplotlib.pyplot as plt
+from matplotlib import animation  
+import mpl_toolkits
+mpl_toolkits.__path__.append(MPL_PATH)
 from mpl_toolkits.basemap import Basemap
-
 
 def url_from_history():
     """url_from_history _summary_
@@ -88,33 +88,29 @@ def get_ip(netlocs: list) -> list:
     return ip_set
 
 
-# TODO: (Refactor this)
-# get IP address to location with ipinfo.io
-# get all their including location (lat, lon)
-access_token = 'b7aa9c76341303'
-handler = ipinfo.AsyncHandler(access_token, cache_options={
-                              'ttl': 30, 'maxsize': 128})
-ip_address = '156.217.144.225'
-details = handler.getDetails(ip_address)
-
-complete_details = []
-
-
 async def do_req():
+    handler = ipinfo.AsyncHandler(ACCESS_TOKEN, cache_options={
+        'ttl': 30, 'maxsize': 128})
+    details = handler.getDetails(IP_ADDRESS)
+    cd = list()
+
     details = await handler.getDetails(ip_address)
-    complete_details.append(details.all)
+    cd.append(details.all)
+
+    return cd
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(do_req())
+complete_details = loop.run_until_complete(do_req())
 
-# TODO: Visualize the data 
-
+# get IP address to location with ipinfo.io
+# get all their including location (lat, lon)
 lat = []
 lon = []
 
 for loc in complete_details:
     lat.append(float(loc.result()['latitude']))
     lon.append(float(loc.result()['longitude']))
+
 
 # Basic map plot
 fig, ax = plt.subplots(figsize=(40, 20))
