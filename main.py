@@ -131,11 +131,24 @@ map.plot(lon, lat, linestyle='none', marker="o",
          markersize=25, alpha=0.4, c="white", markeredgecolor="silver",
          markeredgewidth=1)
 
-plt.text( -170, -72,'Server locations of top 500 websites '
-'(by traffic)\nPlot realized with Python and the Basemap library'
-'\n\n~Yusuf Adel\n yusufadell.dev@gmail.com', ha='left', va='bottom',
-size=28, color='silver')
+def update_plot(frame_number):
+    # update the map
+    map.plot(lon[frame_number], lat[frame_number], linestyle='none', marker="o",
+             markersize=25, alpha=0.4, c="white", markeredgecolor="silver",
+             markeredgewidth=1)
 
-# TODO: Add animate function to plot the map as the user moves
-def animate(i):
-    pass
+
+def init():
+    plt.text(-170, -72, 'Server locations of top 500 websites '
+             '(by traffic)\nPlot realized with Python and the Basemap library'
+             '\n\n~Yusuf\n yusufadell.dev@gmail.com', ha='left', va='bottom',
+             size=28, color='silver')
+
+
+ani = animation.FuncAnimation(fig, update_plot, interval=1,
+                              frames=490, init_func=init)
+
+
+writer = animation.writers['ffmpeg']
+writer = writer(fps=20, metadata=dict(artist='Yusufadel'), bitrate=1800)
+ani.save('anim.mp4', writer=writer)
