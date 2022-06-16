@@ -1,16 +1,15 @@
-from mpl_toolkits.basemap import Basemap
 import asyncio
 import socket
 from urllib.parse import urlparse
 
 import ipinfo  # https://github.com/ipinfo/python
+import matplotlib.pyplot as plt
+import mpl_toolkits
 from browser_history import get_history
+from matplotlib import animation
+from mpl_toolkits.basemap import Basemap
 
 from .const import *
-
-import matplotlib.pyplot as plt
-from matplotlib import animation
-import mpl_toolkits
 
 mpl_toolkits.__path__.append(MPL_PATH)
 
